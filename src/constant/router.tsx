@@ -11,6 +11,7 @@ import AddSiswa from "@/pages/ADMIN/AddSiswa";
 import AddGuru from "@/pages/ADMIN/AddGuru";
 import MainPage from "@/pages/USER/mainpage";
 import RequestPage from "@/pages/USER/requestpage";
+import SplashScreen from "@/pages/USER/SplashScreen";
 
 const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
     path: listed.RequestPage,
     element: <RequestPage />,
+  },
+  {
+    path: listed.SplashScreen,
+    element: <SplashScreen />
   },
 
   // ADMIN PAGES
