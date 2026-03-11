@@ -88,7 +88,7 @@ const MainPage: React.FC = () => {
         <div className="fixed inset-0 bg-black/45 flex justify-center items-center z-[9999]">
           <div className="w-[750px] max-w-[95%] bg-white rounded-[20px] px-9 py-8 relative">
             <h3 className="text-center mb-6 text-xl font-bold">
-              FORMULIR PROFIL DIRI
+              FORMULIR DATA DIRI
             </h3>
 
             <div className="flex gap-3 mb-3.5">

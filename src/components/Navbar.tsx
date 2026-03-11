@@ -36,16 +36,10 @@ const Navbar: FC<NavbarProps> = ({ toggleTheme, theme }) => {
         >
           <CiCircleList />
         </label>
-        <div className="flex flex-col gap-2 p-4 items-center">
-          <p className="text-xs sm:text-lg flex lg:text-lg  justify-start items-center  w-full font-medium gap-x-2">
-            Hi,{" "}
-            <span className="font-bold sm:text-lg lg:text-lg  w-max text-xs ">
-              Bestie
-            </span>
-            {/* <div className="badge badge-outline badge-accent"> {localStorage.getItem("role")}</div> */}
-          </p>
-
-        </div>
+          <div className="absolute top-4 left-6" /*onClick={() => navigate(listed.MainPage)}*/>
+            <img src="src/assets/logo 4kl.png" alt="m" className="h-10 w-auto drop-shadow-lg"
+         />
+          </div>
       </div>
 
       <div className="navbar-end gap-4">
