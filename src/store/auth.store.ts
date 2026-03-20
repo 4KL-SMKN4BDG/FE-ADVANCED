@@ -24,7 +24,7 @@ interface AuthState {
   setSelectedRole: (role: string) => void;
   loadSession: () => void;
   setAuth: (value: boolean) => void;
-  resetPassword: ( newPassword: ResetPassword ) => Promise<void>
+  resetPassword: (newPassword: ResetPassword) => Promise<void>
 }
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -58,14 +58,15 @@ const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  resetPassword: async(newPassword: ResetPassword) =>{
+  resetPassword: async(newPassword: ResetPassword) => {
     try{
       await resetPassword(newPassword);
     } catch (error) {
       set({
-        error: getErrorMessage(error, "Failled to reset password, please try again"),
+        error: getErrorMessage(error, "Failed to reset password, please try again"),
       });
-    }},
+    }
+  },
 
   logout: () => {
     set({
