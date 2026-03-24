@@ -1,30 +1,43 @@
 // src/api/authAPI.ts
 // import { reset } from "canvas-confetti";
 import apiClient from "./base.api";
-import { Role } from "./utils/user";
+// import { Role } from "./utils/user";
 
 export interface User {
   id: string;
   name: string;
   nomorInduk: string;
-  email: string;
+  email: string | null;
 
-  class: string;
-  major: string;
+  class: string | null;
+  major: string | null;
   status: string | null;
 
   organizationDesc: string | null;
-  experienceDesc: string;
+  experienceDesc: string | null;
 
-  birthPlace: string;
-  birthDate: string;
-  address: string;
-  profilePhoto: string;
-  companyId: string;
+  birthPlace: string | null;
+  birthDate: string | null;
+  address: string | null;
+  profilePhoto: string | null;
+  companyId: string | null;
   createdAt: string;
   updatedAt: string;
 
   roles: Role[];
+  company: Company | null;
+}
+
+export interface Company {
+  id: string
+}
+
+export interface Role {
+  id: string,
+  code: string,
+  description: string,
+  createdAt: string,
+  updatedAt: string
 }
 
 export interface LoginData {
@@ -47,7 +60,12 @@ export interface LoginCredentials {
 }
 
 export interface ResetPassword{
+  resetToken: string;
   newPassword: string;
+}
+
+export interface ForgotPassword {
+  email: string;
 }
 
 export const loginAPI = async (
@@ -67,16 +85,32 @@ export const loginAPI = async (
   return response.data;
 };
 
-export const resetPassword = async (
-  newPassword: ResetPassword
+export const forgotPasswordAPI = async (
+  email: ForgotPassword
+): Promise<void> => {
+  const response = await apiClient.post(
+    "/api/v1/auth/forgot-password",
+    email,
+    {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+      }
+    }
+  )
+  return response.data;
+}
+
+export const resetPasswordAPI = async (
+  data: ResetPassword
 ): Promise<void> => {
   const token = sessionStorage.getItem("token");
   const response = await apiClient.post(
   "/api/v1/auth/reset-password",
-  newPassword,
+  data,
   {
     headers: {
-      authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     },
   }

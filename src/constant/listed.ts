@@ -13,5 +13,6 @@ export const listed = {
   AddGuru: "/addguru",
   MainPage: "/mainpage",
   RequestPage: "/requestpage",
+  forgotpass: "/forgotpass",
   SplashScreen: ""
 };

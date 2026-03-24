@@ -6,43 +6,29 @@ import { useNavigate } from "react-router-dom";
 import { listed } from "@/constant/listed";
 import Input from "@/components/ui/InputField";
 import useAuthStore from "@/store/auth.store";
-import { useSearchParams } from "react-router-dom";
-
 
 const schema = yup.object({
-  resetToken: yup.string().required("Token reset password wajib diisi"),
-  password: yup.string().required("Password baru wajib diisi"),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password")], "Password tidak sama")
-    .required("Konfirmasi password wajib diisi"),
+  email: yup.string().required("Email wajib diisi"),
 });
 
-type ResetPassFormData = {
-  resetToken: string;
-  password: string;
-  confirmPassword: string;
+type ForgotPassFormData = {
+  email: string;
 };
 
-export const ResetPass = () => {
-  const { resetPassword } = useAuthStore();
+export const ForgotPass = () => {
+  const { forgotPassword } = useAuthStore();
   const navigate = useNavigate();
   const session = localStorage.getItem("refresh");
-  const [searchParams] = useSearchParams();
-
-  const resetToken = searchParams.get("token");
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<ResetPassFormData>({
+  } = useForm<ForgotPassFormData>({
     mode: "onChange",
     resolver: yupResolver(schema),
     defaultValues: {
-      resetToken: resetToken || "",
-      password: "",
-      confirmPassword: "",
+      email: "",
     },
   });
 
@@ -50,8 +36,8 @@ export const ResetPass = () => {
     if (session) navigate(listed.dashboard);
   }, [session, navigate]);
 
-  const onSubmit = (data: ResetPassFormData) => {
-    resetPassword({ resetToken: data.resetToken, newPassword: data.password });
+  const onSubmit = (data: ForgotPassFormData) => {
+    forgotPassword({ email: data.email});
     navigate(listed.signin);
   };
 
@@ -76,7 +62,7 @@ export const ResetPass = () => {
               Reset Your Password
             </h1>
             <p className="text-sm text-gray-500">
-              Masukkan email dan password baru Anda
+              Masukkan email Anda
             </p>
           </div>
 
@@ -85,19 +71,12 @@ export const ResetPass = () => {
             className="space-y-5"
             onSubmit={handleSubmit(onSubmit)}
           >
-            {/* PASSWORD BARU */}
+            {/* email */}
             <Input
-              type={"password"}
-              placeholder="PASSWORD BARU"
-              error={errors?.password}
-              {...register("password")}              
-            />
-    
-            {/* KONFIRMASI PASSWORD */}
-            <Input
-              type={"password"}
-              placeholder="KONFIRMASI PASSWORD"
-              {...register("confirmPassword")}
+              type="text"
+              placeholder="email"
+              error={errors?.email}
+              {...register("email")}
             />
 
             {/* BUTTON */}
@@ -111,7 +90,7 @@ export const ResetPass = () => {
                   : "bg-gray-400 text-gray-200 cursor-not-allowed"}
               `}
             >
-              RESET
+              SEND VERIFICATION
             </button>
           </form>
         </div>
@@ -134,4 +113,4 @@ export const ResetPass = () => {
   );
 };
 
-export default ResetPass;
+export default ForgotPass;

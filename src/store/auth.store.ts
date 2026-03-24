@@ -7,7 +7,9 @@ import {
   refreshTokenAPI,
   User,
   ResetPassword,
-  resetPassword,
+  resetPasswordAPI,
+  ForgotPassword,
+  forgotPasswordAPI
 } from "@/restApi/auth.api";
 import getErrorMessage from "@/restApi/helper.api";
 
@@ -25,6 +27,7 @@ interface AuthState {
   loadSession: () => void;
   setAuth: (value: boolean) => void;
   resetPassword: (newPassword: ResetPassword) => Promise<void>
+  forgotPassword: (email: ForgotPassword) => Promise<void>;
 }
 
 const useAuthStore = create<AuthState>((set) => ({
@@ -58,11 +61,27 @@ const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  resetPassword: async(newPassword: ResetPassword) => {
+  forgotPassword: async(email: ForgotPassword) => {
+    set({ isLoading: true, error: null });
     try{
-      await resetPassword(newPassword);
+      await forgotPasswordAPI(email);
+      set({ isLoading: false });
     } catch (error) {
       set({
+        isLoading: false,
+        error: getErrorMessage(error, "Failed to send reset password email, please try again"),
+      });
+    }
+  },
+
+  resetPassword: async(data: ResetPassword) => {
+    set({ isLoading: true, error: null });
+    try{
+      await resetPasswordAPI(data);
+      set({ isLoading: false });
+    } catch (error) {
+      set({
+        isLoading: false,
         error: getErrorMessage(error, "Failed to reset password, please try again"),
       });
     }

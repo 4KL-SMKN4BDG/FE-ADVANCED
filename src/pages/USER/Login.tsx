@@ -102,7 +102,7 @@ const Login = () => {
 
             {/* FORGOT PASSWORD */}
             <button type="button"
-              onClick={() => navigate(listed.resetpass)}
+              onClick={() => navigate(listed.forgotpass)}
               className="text-sm text-blue-600 hover:underline block"
             >
               Forgot Password?
