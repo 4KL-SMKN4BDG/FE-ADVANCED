@@ -19,9 +19,9 @@ const Navbar: FC<NavbarProps> = ({ toggleTheme, theme }) => {
     // TODO: Add allUser function or remove if not needed
   }, []);
 
-  const ChangRole = () => {
-    navigate(listed.selectRole);
-  };
+  // const ChangRole = () => {
+  //   navigate(listed.selectRole);
+  // };
 
   const logoutHandler = () => {
     logout();
@@ -70,11 +70,11 @@ const Navbar: FC<NavbarProps> = ({ toggleTheme, theme }) => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-5 shadow gap-4"
           >
           
-            <li>
+            {/* <li>
               <a onClick={ChangRole} className="font-bold text-sm">
                 Change Role
               </a>
-            </li>
+            </li> */}
             <li className="text-red-500">
               <a onClick={logoutHandler} className="font-bold text-sm">
                 Logout
