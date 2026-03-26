@@ -73,14 +73,7 @@ export const loginAPI = async (
 ): Promise<LoginResponse> => {
   const response = await apiClient.post<LoginResponse>(
     "/api/v1/auth/login",
-
-    credentials,
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      },
-    }
+    credentials
   );
   return response.data;
 };
@@ -90,13 +83,7 @@ export const forgotPasswordAPI = async (
 ): Promise<void> => {
   const response = await apiClient.post(
     "/api/v1/auth/forgot-password",
-    email,
-    {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-      }
-    }
+    email
   )
   return response.data;
 }
@@ -106,12 +93,7 @@ export const resetPasswordAPI = async (
 ): Promise<void> => {
   const response = await apiClient.post(
   "/api/v1/auth/reset-password",
-  data,
-  {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }
+  data
 );
   return response.data;
 };
@@ -119,8 +101,9 @@ export const resetPasswordAPI = async (
 export const refreshTokenAPI = async (
   refreshToken: string
 ): Promise<LoginResponse> => {
-  const response = await apiClient.post<LoginResponse>("/api/v1/auth/refresh", {
-    refreshToken,
-  });
+  const response = await apiClient.post<LoginResponse>(
+    "/api/v1/auth/refresh", 
+    {refreshToken}
+  );
   return response.data;
 };

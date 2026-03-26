@@ -1,16 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { listed } from "@/constant/listed";
 import fotoDepan from "../../assets/fotodepansmk.jpeg";
+import companyStore from "@/store/company.store";
 
-interface Perusahaan {
-    id: number;
-    nama: string;
-    sub: string;
-    logo: string;
-}
     const PerusahaanPage = () => {
     const navigate = useNavigate();
     const [theme, setTheme] = useState<"lofi" | "night">("lofi");
@@ -19,27 +14,13 @@ interface Perusahaan {
     setTheme(prev => (prev === "lofi" ? "night" : "lofi"));
 };
 
-  // 🔹 Dummy data (nanti ganti aja yakkk)
-const data: Perusahaan[] = [
-    {
-        id: 1,
-        nama: "Elflow Baraya Multika",
-        sub: "Elflow Baraya Multika",
-        logo: "/company.png",
-    },
-    {
-        id: 2,
-        nama: "LAZGDI",
-        sub: "Graha Dhuafa Indonesia",
-        logo: "/company.png",
-    },
-    {
-        id: 3,
-        nama: "Curaweda Palangan Inotech",
-        sub: "Curaweda Palangan Inotech",
-        logo: "/company.png",
-    },
-];
+    const { showAll, company } = companyStore();
+
+    const payload = `paginate=true&limit=10`
+useEffect(() => {
+    showAll(payload);
+
+}, []);
 
     return (
     <div data-theme={theme} className="min-h-screen bg-base-200">
@@ -66,23 +47,42 @@ const data: Perusahaan[] = [
 
         {/* ACTION BUTTON */}
     <div className="flex gap-3 mb-6 justify-end">
-        <button onClick={() => navigate(listed.AddPerusahaan)} className="btn btn-success btn-sm">ADD</button>
-        <button className="btn btn-info btn-sm">EDIT</button>
-        <button className="btn btn-error btn-sm">DELETE</button>
+        <button onClick={() => navigate(listed.AddPerusahaan)} className="btn btn-success btn-sm">ADD NEW COMPANY</button>
     </div>
 
         {/* LIST */}
     <div className="bg-base-100 rounded-xl shadow">
-        {data.map(item => (
+        {company?.map(item => (
             <div key={item.id} className="flex items-center gap-4 px-5 py-4 border-b last:border-none hover:bg-base-200 transition">
             <input type="checkbox" className="checkbox checkbox-sm" />
-            <img src={item.logo}alt={item.nama}className="w-10 h-10 object-contain"/>
+            <img src={item.logo || undefined}alt={item.name}className="w-10 h-10 object-contain"/>
 
             <div>
-                <p className="font-semibold">{item.nama}</p>
+                <p className="font-semibold">{item.name}</p>
                 <p className="text-xs text-base-content/60">
-                {item.sub}
+                {item.description || "No description available."}
                 </p>
+            </div>
+            <div>
+                <button onClick={() => {
+                    navigate(`${listed.RequestPage}?id=${item.id}`)
+                }}>
+                    Show detail
+                </button>
+            </div>
+            <div>
+                <button onClick={() => {
+                    navigate(`${listed.EditPerusahaan}?id=${item.id}`)
+                }}>
+                    Edit
+                </button>
+            </div>
+            <div>
+                <button onClick={() => {
+                    //delete function
+                }}>
+                    Delete
+                </button>
             </div>
             </div>
         ))}

@@ -4,43 +4,90 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { listed } from "@/constant/listed";
 import fotoDepan from "../../assets/fotodepansmk.jpeg";
+import companyStore from "../../store/company.store";
 
 const AddPerusahaan = () => {
 const navigate = useNavigate();
+const { create } = companyStore();
+const formData = new FormData();
 
 const [theme, setTheme] = useState<"lofi" | "night">("lofi");
 const toggleTheme = () => {
     setTheme((prev) => (prev === "lofi" ? "night" : "lofi"));
 };
 
-const [namaPerusahaan, setNamaPerusahaan] = useState("");
-const [deskripsi, setDeskripsi] = useState("");
-const [alamat, setAlamat] = useState("");
-const [kapasitas, setKapasitas] = useState("");
+const [listPerusahaan, setListPerusahaan] = useState([
+    {
+    name: "",
+    description: "",
+    address: "",
+    capacity: "",
+    logo: null as File | null,
+    preview: null as string | null
+    },
+]);
 
-const [foto, setFoto] = useState<File | null>(null);
-const [preview, setPreview] = useState<string | null>(null);
-
-const handleFotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleFotoChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-        setFoto(file);
-        setPreview(URL.createObjectURL(file));
+        const newData = [...listPerusahaan];
+        newData[index].logo = file;
+        newData[index].preview = URL.createObjectURL(file);
+        setListPerusahaan(newData);
     }
+};
+
+const handleChange = (index: number, field: string, value: any) => {
+    const newData = [...listPerusahaan];
+    newData[index][field] = value;
+    setListPerusahaan(newData);
+};
+
+const handleAddForm = () => {
+    setListPerusahaan([
+        ...listPerusahaan,
+        {
+        name: "",
+        description: "",
+        address: "",
+        capacity: "",
+        logo: null,
+        preview: null
+        },
+    ]);
 };
 
 const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    console.log({
-        namaPerusahaan,
-        deskripsi,
-        alamat,
-        kapasitas,
-        foto
-    });
+    // const DataCreatePerusahaan = listPerusahaan.map((item) => ({
+    //     name: item.name,
+    //     description: item.description,
+    //     address: item.address,
+    //     capacity: item.capacity,
+    //     logo: item.logo,
+    // }));
+    
+    for (let i = 0; i < listPerusahaan.length; i++) {
+    const perusahaan = listPerusahaan[i];
+        // console.log(perusahaan)
+    formData.append(`name[${i}]`, perusahaan.name)
+    formData.append(`description[${i}]`, perusahaan.description)
+    formData.append(`address[${i}]`, perusahaan.address)
+    formData.append(`capacity[${i}]`, String(perusahaan.capacity))
+    if (perusahaan.logo) formData.append(`logo[${i}]`, perusahaan.logo)
+    }
 
-    navigate("/admin/perusahaan");
+    for (const [key, value] of formData.entries()) {
+        if (value instanceof File) {
+            console.log(key, value.name)
+        } else {
+        console.log(key, value)
+        }
+    };
+
+    create(formData);
+    // navigate("/admin/perusahaan");
 };
 
     return (
@@ -72,14 +119,15 @@ const handleSubmit = (e: React.FormEvent) => {
                 onSubmit={handleSubmit}
                 className="bg-base-100 rounded-xl shadow p-8 grid grid-cols-1 md:grid-cols-3 gap-8"
                 >
-
-                {/* FOTO */}
-                <div className="flex flex-col items-center justify-center gap-3 h-full">
+                {listPerusahaan.map((item, index) => (
+                <div key={index} className="bg-base-100 rounded-xl shadow p-8 grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
+                        {/* FOTO */}
+                  <div className="flex flex-col items-center justify-center gap-3 h-full">
 
                     <div className="w-48 h-48 rounded-xl overflow-hidden shadow bg-base-200 flex items-center justify-center">
-                        {preview ? (
+                        {item.preview ? (
                             <img
-                                src={preview}
+                                src={item.preview}
                                 alt="Preview"
                                 className="w-full h-full object-cover"
                             />
@@ -93,10 +141,9 @@ const handleSubmit = (e: React.FormEvent) => {
                     <input
                         type="file"
                         accept="image/*"
-                        onChange={handleFotoChange}
+                        onChange={(e) => handleFotoChange(index, e)}
                         className="file-input file-input-bordered file-input-sm max-w-xs mx-auto mt-4"
                     />
-
                 </div>
 
                 {/* INPUT */}
@@ -109,8 +156,8 @@ const handleSubmit = (e: React.FormEvent) => {
                         </label>
                         <input
                             type="text"
-                            value={namaPerusahaan}
-                            onChange={(e) => setNamaPerusahaan(e.target.value)}
+                            value={item.name}
+                            onChange={(e) => handleChange(index, "name", e.target.value)}
                             className="input input-bordered w-full mt-1"
                             required
                         />
@@ -122,8 +169,8 @@ const handleSubmit = (e: React.FormEvent) => {
                             Deskripsi
                         </label>
                         <textarea
-                            value={deskripsi}
-                            onChange={(e) => setDeskripsi(e.target.value)}
+                            value={item.description}
+                            onChange={(e) => handleChange(index, "description", e.target.value)}
                             className="textarea textarea-bordered w-full mt-1 h-24"
                         />
                     </div>
@@ -138,8 +185,8 @@ const handleSubmit = (e: React.FormEvent) => {
                             </label>
                             <input
                                 type="text"
-                                value={alamat}
-                                onChange={(e) => setAlamat(e.target.value)}
+                                value={item.address}
+                                onChange={(e) => handleChange(index, "address", e.target.value)}
                                 className="input input-bordered w-full mt-1"
                             />
                         </div>
@@ -151,19 +198,26 @@ const handleSubmit = (e: React.FormEvent) => {
                             </label>
                             <input
                                 type="number"
-                                value={kapasitas}
-                                onChange={(e) => setKapasitas(e.target.value)}
+                                value={item.capacity}
+                                onChange={(e) => handleChange(index, "capacity", e.target.value)}
                                 className="input input-bordered w-full mt-1"
                             />
                         </div>
 
                     </div>
+                </div>
+                </div>
+                        ))}
+                <button
+                type="button"
+                onClick={handleAddForm}
+                className="btn btn-secondary mb-4">
+                    + Tambah Form
+                </button>
 
                     <button className="btn btn-primary w-40 mt-2">
                         Simpan
                     </button>
-
-                </div>
 
                 </form>
         </div>
