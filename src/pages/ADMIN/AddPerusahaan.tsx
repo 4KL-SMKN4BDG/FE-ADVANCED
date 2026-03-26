@@ -70,12 +70,12 @@ const handleSubmit = (e: React.FormEvent) => {
     
     for (let i = 0; i < listPerusahaan.length; i++) {
     const perusahaan = listPerusahaan[i];
-        // console.log(perusahaan)
+        console.log(perusahaan.logo)
     formData.append(`name[${i}]`, perusahaan.name)
     formData.append(`description[${i}]`, perusahaan.description)
     formData.append(`address[${i}]`, perusahaan.address)
     formData.append(`capacity[${i}]`, String(perusahaan.capacity))
-    if (perusahaan.logo) formData.append(`logo[${i}]`, perusahaan.logo)
+    if (perusahaan.logo) formData.append(`logo`, perusahaan.logo)
     }
 
     for (const [key, value] of formData.entries()) {

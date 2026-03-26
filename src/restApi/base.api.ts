@@ -9,12 +9,12 @@ const apiClient: AxiosInstance = axios.create({
   
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    config.headers['Content-Type'] = 'application/json';
+    // config.headers['Content-Type'] = 'application/json';
     config.headers['Access-Control-Allow-Origin'] = '*';
     config.headers['ngrok-skip-browser-warning'] = 'false';
     const { token } = useAuthStore.getState();
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -32,7 +32,7 @@ apiClient.interceptors.response.use(
       try {
         const newToken = await useAuthStore.getState().refreshToken();
         if (newToken) {
-          originalRequest.headers.Authorization = `Bearer ${newToken}`;
+          originalRequest.headers.authorization = `Bearer ${newToken}`;
           return apiClient(originalRequest);
         }
       } catch (refreshError) {
