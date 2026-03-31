@@ -52,41 +52,62 @@ import useAuthStore from "@/store/auth.store";
     </div>)}
 
         {/* LIST */}
-    <div className="bg-base-100 rounded-xl shadow">
-        {company?.map(item => (
+    <div className="bg-base-100 rounded-xl shadow ">
+        {company?.map((item, index) => (
             <div key={item.id} className="flex items-center gap-4 px-5 py-4 border-b last:border-none hover:bg-base-200 transition">
-            <input type="checkbox" className="checkbox checkbox-sm" />
-            <img src={item.logo || undefined}alt={item.name}className="w-10 h-10 object-contain"/>
+            <div className="flex items-center gap-4 flex-1">
+                <span className="w-6 text-center font-semibold text-gray-500">
+                    {index + 1}  
+                </span>
+    
+                <img src={item?.profilePhoto || "default_photo.png"}
+                alt={item?.name}
+                className="w-10 h-10 object-contain"/>
 
-            <div>
-                <p className="font-semibold">{item.name}</p>
-                <p className="text-xs text-base-content/60">
-                {item.description || "No description available."}
-                </p>
+                <div>
+                    <p className="font-semibold">{item.name}</p>
+                    <p className="text-xs text-base-content/60">
+                    {item.description || "No description available."}
+                    </p>
+                </div>
             </div>
-            <div>
-                <button onClick={() => {
-                    navigate(`${listed.RequestPage}?id=${item.id}`)
+            <div className="flex gap-3 text-sm">
+
+                <button 
+                className="text-blue-600 hover:underline"
+                onClick={() => {
+                navigate(`${listed.RequestPage}?id=${item.id}`)
                 }}>
-                    Show detail
+                    Detail
                 </button>
             </div>
-            {role === "ADMIN" && (<div>
-                <button onClick={() => {
+            {role === "ADMIN" &&(
+                <div>
+                <button 
+                className="text-yellow-600 hover:underline"
+                onClick={() => {
                     navigate(`${listed.AddPerusahaan}?id=${item.id}`)
                 }}>
                     Edit
                 </button>
             </div>)}
-            {role === "ADMIN" && (<div>
-                <button onClick={() => {
+
+            {role === "ADMIN" && (
+                <div>
+                <button
+                className="text-red-600 hover:underline"
+                onClick={() => {
                     deleteCompany(item.id)
                 }}>
                     Delete
                 </button>
             </div>)}
-            {role === "STUDENT" && (<div>
-                <button onClick={() => {
+
+            {role === "STUDENT" && (
+                <div>
+                <button
+                className="text-green-600 hover:underline"
+                onClick={() => {
                     apply(item.id)
                 }}>
                     Apply
@@ -95,7 +116,6 @@ import useAuthStore from "@/store/auth.store";
             </div>
         ))}
         </div>
-
     </div>
     </div>
 );

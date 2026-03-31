@@ -51,50 +51,84 @@ import { useSearchParams } from "react-router-dom";
     </button>
 
         {/* ACTION BUTTON */}
-    <div className="flex gap-3 mb-6 justify-end">
-        <button onClick={() => navigate(`${listed.AddUser}?role=${roleSearch.toLowerCase()}`)} className="btn btn-success btn-sm">ADD NEW USERS</button>
-        {/* <button className="btn btn-info btn-sm">EDIT</button>
-        <button className="btn btn-error btn-sm">DELETE</button> */}
-    </div>
+    <div className="flex justify-between items-center mb-6">
+  <h2 className="text-lg font-semibold">
+  </h2>
 
+  {role === "ADMIN" && (
+    <button
+      className="btn btn-success btn-sm"
+      onClick={() => {
+        navigate(`${listed.AddUser}?role=${roleSearch.toLowerCase()}`);
+      }}
+    >
+      + Add User
+    </button>
+  )}
+</div>
         {/* LIST */}
     <div className="bg-base-100 rounded-xl shadow">
-        {listUser?.map(item => (
-            <div key={item.id} className="flex items-center gap-4 px-5 py-4 border-b last:border-none hover:bg-base-200 transition">
-            <input type="checkbox" className="checkbox checkbox-sm" />
-            <img src={item?.profilePhoto || "default_photo.png"} alt={item?.name} className="w-10 h-10 object-contain"/>
+        {listUser?.map((item, index) => (
+            <div
+                key={item.id}
+                className="flex items-center gap-4 px-5 py-4 border-b last:border-none hover:bg-base-200 transition"
+            >
+                {/* NOMOR */}
+                <span className="w-6 text-center font-semibold text-gray-500">
+                {index + 1}
+                </span>
 
-            <div>
+                {/* FOTO */}
+                <img
+                src={item?.profilePhoto || "default_photo.png"}
+                alt={item?.name}
+                className="w-10 h-10 object-contain"
+                />
+
+                {/* INFO */}
+                <div className="flex-1">
                 <p className="font-semibold">{item.name}</p>
                 <p className="text-xs text-base-content/60">
-                {item?.class}
+                    {item?.class}
                 </p>
-            </div>
-                <div>
-                <button onClick={() => {
-                    navigate(`${listed.RequestPage}?id=${item.id}`)
-                }}>
-                    Show detail
-                </button>
                 </div>
-                {role === "ADMIN" && (<div>
-                <button onClick={() => {
-                    navigate(`${listed.AddGuru}?id=${item.id}`)
-                }}>
-                    Edit
-                </button>
-            </div>)}
-            {role === "ADMIN" && (<div>
-                <button onClick={() => {
-                    deleteUser(item.id)
-                }}>
-                    Delete
-                </button>
-            </div>)}
-            </div>
-        ))}
-        </div>
 
+                {/* ACTION */}
+                <div className="flex gap-3 text-sm">
+                    <button
+                        className="text-blue-600 hover:underline"
+                        onClick={() => {
+                        navigate(`${listed.RequestPage}?id=${item.id}`);
+                        }}
+                    >
+                        Detail
+                    </button>
+
+                    {role === "ADMIN" && (
+                        <button
+                        className="text-yellow-600 hover:underline"
+                        onClick={() => {
+                            navigate(`${listed.AddGuru}?id=${item.id}`);
+                        }}
+                        >
+                        Edit
+                        </button>
+                    )}
+
+                    {role === "ADMIN" && (
+                        <button
+                        className="text-red-600 hover:underline"
+                        onClick={() => {
+                            deleteUser(item.id);
+                        }}
+                        >
+                        Delete
+                        </button>
+                    )}
+                </div>
+            </div>
+            ))}
+        </div>
     </div>
     </div>
 );
