@@ -171,108 +171,124 @@ navigate(listed.PerusahaanPage)
             {/* FORM */}
             <form
                 onSubmit={handleSubmit}
-                className="bg-base-100 rounded-xl shadow p-8 grid grid-cols-1 md:grid-cols-3 gap-8"
+                className="bg-base-100 rounded-xl shadow p-8 flex flex-col gap-6"
                 >
                 {listPerusahaan.map((item, index) => (
-                <div key={index} className="bg-base-100 rounded-xl shadow p-8 grid grid-cols-1 md:grid-cols-3 gap-8 mb-6">
-                        {/* FOTO */}
-                  <div className="flex flex-col items-center justify-center gap-3 h-full">
-
-                    <div className="w-48 h-48 rounded-xl overflow-hidden shadow bg-base-200 flex items-center justify-center">
-                        { item.preview ? (
+                    <div
+                    key={index}
+                    className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-8 border-b pb-6"
+                    >
+                    {/* ================= FOTO ================= */}
+                    <div className="flex flex-col items-center gap-4">
+                        <div className="w-[250px] h-[250px] rounded-xl overflow-hidden shadow bg-base-200 flex items-center justify-center">
+                        {item.preview ? (
                             <img
-                                src={item.preview}
-                                alt="Preview"
-                                className="w-full h-full object-cover"
+                            src={item.preview}
+                            alt="Preview"
+                            className="w-full h-full object-cover"
                             />
                         ) : (
-                            <span className="text-gray-400 text-sm">
-                                Pilih Foto Perusahaan
+                            <span className="text-gray-400 text-sm text-center px-4">
+                            Pilih Foto Perusahaan
                             </span>
                         )}
-                    </div>
+                        </div>
 
-                    <input
+                        <input
                         type="file"
                         accept="image/*"
                         onChange={(e) => handleFotoChange(index, e)}
-                        className="file-input file-input-bordered file-input-sm max-w-xs mx-auto mt-4"
-                    />
-                </div>
+                        className="file-input file-input-bordered file-input-sm w-full"
+                        />
+                    </div>
 
-                {/* INPUT */}
-                <div className="md:col-span-2 flex flex-col gap-4">
+                    {/* ================= FORM INPUT ================= */}
+                    <div className="flex flex-col gap-5">
 
-                    {/* Nama Perusahaan */}
-                    <div>
+                        {/* Nama */}
+                        <div>
                         <label className="text-sm font-semibold">
                             Nama Perusahaan
                         </label>
                         <input
                             type="text"
                             value={item.name}
-                            onChange={(e) => handleChange(index, "name", e.target.value)}
+                            onChange={(e) =>
+                            handleChange(index, "name", e.target.value)
+                            }
                             className="input input-bordered w-full mt-1"
                             required
                         />
-                    </div>
+                        </div>
 
-                    {/* Deskripsi */}
-                    <div>
+                        {/* Deskripsi */}
+                        <div>
                         <label className="text-sm font-semibold">
                             Deskripsi
                         </label>
                         <textarea
                             value={item.description}
-                            onChange={(e) => handleChange(index, "description", e.target.value)}
-                            className="textarea textarea-bordered w-full mt-1 h-24"
+                            onChange={(e) =>
+                            handleChange(index, "description", e.target.value)
+                            }
+                            className="textarea textarea-bordered w-full mt-1 h-28"
                         />
-                    </div>
+                        </div>
 
-                    {/* Row bawah */}
-                    <div className="grid grid-cols-2 gap-4">
+                        {/* ROW 2 KOLOM */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                         {/* Alamat */}
                         <div>
                             <label className="text-sm font-semibold">
-                                Alamat / Link
+                            Alamat / Link
                             </label>
                             <input
-                                type="text"
-                                value={item.address}
-                                onChange={(e) => handleChange(index, "address", e.target.value)}
-                                className="input input-bordered w-full mt-1"
+                            type="text"
+                            value={item.address}
+                            onChange={(e) =>
+                                handleChange(index, "address", e.target.value)
+                            }
+                            className="input input-bordered w-full mt-1"
                             />
                         </div>
 
                         {/* Kapasitas */}
                         <div>
                             <label className="text-sm font-semibold">
-                                Kapasitas
+                            Kapasitas
                             </label>
                             <input
-                                type="number"
-                                value={item.capacity}
-                                onChange={(e) => handleChange(index, "capacity", e.target.value)}
-                                className="input input-bordered w-full mt-1"
+                            type="number"
+                            value={item.capacity}
+                            onChange={(e) =>
+                                handleChange(index, "capacity", e.target.value)
+                            }
+                            className="input input-bordered w-full mt-1"
                             />
                         </div>
 
+                        </div>
                     </div>
-                </div>
-                </div>
-                        ))}
-                {!idCompany && (<button
-                type="button"
-                onClick={handleAddForm}
-                className="btn btn-secondary mb-4">
-                    + Tambah Form
-                </button>)}
+                    </div>
+                ))}
 
-                    <button type="submit" className="btn btn-primary w-40 mt-2">
-                        Simpan
+                {/* ================= ACTION BUTTON ================= */}
+                <div className="flex justify-between items-center">
+                    {!idCompany && (
+                    <button
+                        type="button"
+                        onClick={handleAddForm}
+                        className="btn btn-secondary"
+                    >
+                        + Tambah Form
                     </button>
+                    )}
 
+                    <button type="submit" className="btn btn-primary w-40">
+                    Simpan
+                    </button>
+                </div>
                 </form>
         </div>
     </div>
