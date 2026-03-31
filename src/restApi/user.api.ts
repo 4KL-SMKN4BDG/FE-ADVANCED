@@ -102,7 +102,8 @@ export const UserShowOneAPI = async (id: string) => {
   return response.data;
 };
 
-export const UserCreateAPI = async (data: FormData) => {
+// Ini yang diganti pin jadi, FormData diganti jadi JSON biar kebaca katanya.
+export const UserCreateAPI = async (data: UserCreate) => {
   const response = await apiClient.post<UserManyResponse>(
     "/api/v1/user/create",
     data
@@ -124,3 +125,8 @@ export const UserDeleteAPI = async (id: string) => {
   );
   return response.data;
 };
+
+
+
+
+
