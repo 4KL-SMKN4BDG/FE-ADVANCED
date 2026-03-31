@@ -4,42 +4,28 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { listed } from "@/constant/listed";
 import fotoDepan from "../../assets/fotodepansmk.jpeg";
+import useAuthStore from "@/store/auth.store";
+import userStore from "@/store/user.store";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
-interface Guru {
-    id: number;
-    nama: string;
-    sub: string;
-    logo: string;
-}
     const Guru = () => {
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const [theme, setTheme] = useState<"lofi" | "night">("lofi");
+    const { listUser, showAll, deleteUser } = userStore();
+    const { user } = useAuthStore();
+    const roleSearch = searchParams.get("role") === "teacher" ? "TEACHER" : "STUDENT"; 
+    const role = user?.roles[0]?.code === "ADMIN" ? "ADMIN" : "STUDENT";
+    const payload = `paginate=true&limit=10&where=roles.some.code:${roleSearch}`;
+
+    useEffect(() => {
+        showAll(payload);
+    }, [])
 
     const toggleTheme = () => {
     setTheme(prev => (prev === "lofi" ? "night" : "lofi"));
 };
-
-  // 🔹 Dummy data (nanti ganti aja yakkk)
-const data: Guru[] = [
-    {
-        id: 1,
-        nama: "Hana Zainab",
-        sub:  "Rekayasa Perangkat Lunak",
-        logo: "/company.png",
-    },
-    {
-        id: 2,
-        nama: "Kusmoro",
-        sub: "Teknik Komputer Jaringan",
-        logo: "/company.png",
-    },
-    {
-        id: 3,
-        nama: "Jajang",
-        sub: "Desain Komunikasi Visual",
-        logo: "/company.png",
-    },
-];
 
     return (
     <div data-theme={theme} className="min-h-screen bg-base-200">
@@ -52,7 +38,7 @@ const data: Guru[] = [
         <img src={fotoDepan} alt="Header" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/40" />
         <div className="absolute inset-0 flex items-center justify-center">
-        <h1 className="text-white text-3xl font-bold tracking-widest"> GURU PEMBIMBING </h1>
+        <h1 className="text-white text-3xl font-bold tracking-widest"> {roleSearch === "STUDENT" ? "SISWA RPL" : "GURU PEMBIMBING"} </h1>
         </div>
     </div>
 
@@ -66,24 +52,45 @@ const data: Guru[] = [
 
         {/* ACTION BUTTON */}
     <div className="flex gap-3 mb-6 justify-end">
-        <button onClick={() => navigate(listed.AddGuru)} className="btn btn-success btn-sm">ADD</button>
-        <button className="btn btn-info btn-sm">EDIT</button>
-        <button className="btn btn-error btn-sm">DELETE</button>
+        <button onClick={() => navigate(`${listed.AddUser}?role=${roleSearch.toLowerCase()}`)} className="btn btn-success btn-sm">ADD NEW USERS</button>
+        {/* <button className="btn btn-info btn-sm">EDIT</button>
+        <button className="btn btn-error btn-sm">DELETE</button> */}
     </div>
 
         {/* LIST */}
     <div className="bg-base-100 rounded-xl shadow">
-        {data.map(item => (
+        {listUser?.map(item => (
             <div key={item.id} className="flex items-center gap-4 px-5 py-4 border-b last:border-none hover:bg-base-200 transition">
             <input type="checkbox" className="checkbox checkbox-sm" />
-            <img src={item.logo}alt={item.nama}className="w-10 h-10 object-contain"/>
+            <img src={item?.profilePhoto || "default_photo.png"} alt={item?.name} className="w-10 h-10 object-contain"/>
 
             <div>
-                <p className="font-semibold">{item.nama}</p>
+                <p className="font-semibold">{item.name}</p>
                 <p className="text-xs text-base-content/60">
-                {item.sub}
+                {item?.class}
                 </p>
             </div>
+                <div>
+                <button onClick={() => {
+                    navigate(`${listed.RequestPage}?id=${item.id}`)
+                }}>
+                    Show detail
+                </button>
+                </div>
+                {role === "ADMIN" && (<div>
+                <button onClick={() => {
+                    navigate(`${listed.AddGuru}?id=${item.id}`)
+                }}>
+                    Edit
+                </button>
+            </div>)}
+            {role === "ADMIN" && (<div>
+                <button onClick={() => {
+                    deleteUser(item.id)
+                }}>
+                    Delete
+                </button>
+            </div>)}
             </div>
         ))}
         </div>

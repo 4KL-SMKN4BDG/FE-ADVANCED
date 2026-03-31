@@ -53,7 +53,7 @@ const Siswa = () => {
                 </button>
 
                 <div className="flex gap-3 mb-6 justify-end">
-                    <button onClick={() => navigate(listed.AddSiswa)} className="btn btn-success btn-sm">ADD</button>
+                    <button onClick={() => navigate(listed.AddUser)} className="btn btn-success btn-sm">ADD</button>
                     <button className="btn btn-info btn-sm">EDIT</button>
                     <button className="btn btn-error btn-sm">DELETE</button>
                 </div>

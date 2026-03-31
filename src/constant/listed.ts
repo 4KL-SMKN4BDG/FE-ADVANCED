@@ -5,11 +5,11 @@ export const listed = {
   selectRole: "/select-role", //nn 
   PerusahaanPage: "/perusahaan", 
   SiswaPage: "/siswa",
-  GuruPage: "/guru", 
+  UserPage: "/user", 
   AddPerusahaan: "/addperusahaan", 
   EditPerusahaan: "/editperusahaan", //nn
   View: "/view",
-  AddSiswa: "/addsiswa",
+  AddUser: "/adduser",
   AddGuru: "/addguru",
   MainPage: "/mainpage",
   RequestPage: "/requestpage",

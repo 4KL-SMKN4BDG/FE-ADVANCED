@@ -52,7 +52,7 @@ const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
     element: <SiswaPage />,
   },
   {
-    path: listed.GuruPage,
+    path: listed.UserPage,
     element: <GuruPage />,
   },
   {
@@ -68,7 +68,7 @@ const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
     element: <View />
   },
   {
-    path: listed.AddSiswa,
+    path: listed.AddUser,
     element: <AddSiswa />,
   },
   {

@@ -29,14 +29,14 @@ const DashboardAdmin = () => {
         description:
         "Kelola data guru pembimbing yang bertanggung jawab selama PKL.",
         icon: <Users size={40} />,
-        path: listed.GuruPage,
+        path: `${listed.UserPage}?role=teacher`,
     },
     {
         title: "Siswa",
         description:
         "Kelola data siswa yang mengikuti Praktik Kerja Lapangan.",
         icon: <GraduationCap size={40} />,
-        path: listed.AddSiswa, //sementara diubah dulu buat developmenyt
+        path: `${listed.UserPage}?role=student`, //sementara diubah dulu buat developmenyt
     },
     ];
 
@@ -51,7 +51,7 @@ const DashboardAdmin = () => {
         <img src={fotoDepan} alt="Header" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 flex items-center justify-center">
-            <h1 className="text-white text-3xl font-bold tracking-widest">Dashboard Admin</h1>
+            <h1 className="text-white text-3xl font-bold tracking-widest">SELAMAT DATANG</h1>
         </div>
         </div>
 

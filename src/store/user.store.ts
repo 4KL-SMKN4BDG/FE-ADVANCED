@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import {
     User,
-    Roles,
+    UserCreate,
     UserShowAllAPI,
     UserShowOneAPI,
     UserCreateAPI,
@@ -11,7 +11,7 @@ import {
 import getErrorMessage from "@/restApi/helper.api";
 
 interface AuthState {
-    user: User[] | null;
+    listUser: User[] | null;
     oneUser: User | null;
     token: string | null;
     isLoading: boolean;
@@ -19,13 +19,13 @@ interface AuthState {
     isAuth: boolean;
     showAll: (payload: string) => Promise<void>;
     showOne: (id: string) => Promise<void>;
-    create: (data: FormData) => Promise<void>;
+    create: (data: UserCreate) => Promise<void>;
     update: (id: string, data: FormData) => Promise<void>;
     deleteUser: (id: string) => Promise<void>;
 }
 
 const userStore = create<AuthState>((set) => ({
-    user: null,
+    listUser: null,
     oneUser: null,
     token: null,
     isLoading: false,
@@ -37,7 +37,7 @@ const userStore = create<AuthState>((set) => ({
     try {
       const response = await UserShowAllAPI(payload);
       set({
-        user: response.data.items,
+        listUser: response.data.items,
         isLoading: false,
       });
 
@@ -66,7 +66,7 @@ const userStore = create<AuthState>((set) => ({
     }
   },
 
-  create: async (data: FormData) => {
+  create: async (data: UserCreate) => {
     set({ isLoading: true, error: null });
     try{
     const response = await UserCreateAPI(data);

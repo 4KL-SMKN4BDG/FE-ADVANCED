@@ -125,8 +125,3 @@ export const UserDeleteAPI = async (id: string) => {
   );
   return response.data;
 };
-
-
-
-
-

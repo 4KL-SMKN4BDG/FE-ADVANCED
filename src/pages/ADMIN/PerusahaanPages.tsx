@@ -15,8 +15,7 @@ import useAuthStore from "@/store/auth.store";
     setTheme(prev => (prev === "lofi" ? "night" : "lofi"));
 };
     const { user } = useAuthStore();
-    // if (user?.roles[0].code === null) navigate(listed.signin);
-    const role = user?.roles[0].code === "ADMIN" ? "ADMIN" : "STUDENT";
+    const role = user?.roles[0]?.code === "ADMIN" ? "ADMIN" : "STUDENT";
     const { showAll, company, deleteCompany, apply } = companyStore();
 
     const payload = `paginate=true&limit=10`
