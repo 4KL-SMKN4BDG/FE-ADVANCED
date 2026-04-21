@@ -16,7 +16,7 @@ const [theme, setTheme] = useState<"lofi" | "night">("night");
 const isNight = theme === "night";
 
 const [listPerusahaan, setListPerusahaan] = useState([
-{ name: "", description: "", address: "", capacity: "", logo: null as File | null | string, preview: null as string | null },
+{ name: "", description: "", address: "", maps: "", capacity: "", logo: null as File | null | string, preview: null as string | null },
 ]);
 
 const styles = {
@@ -44,7 +44,7 @@ setListPerusahaan(newData);
 };
 
 const handleAddForm = () => {
-setListPerusahaan([...listPerusahaan, { name: "", description: "", address: "", capacity: "", logo: null, preview: null }]);
+setListPerusahaan([...listPerusahaan, { name: "", description: "", address: "", maps: "", capacity: "", logo: null, preview: null }]);
 };
 
 useEffect(() => {
@@ -61,6 +61,7 @@ setListPerusahaan([{
 name: oneCompany.name || '',
 description: oneCompany.description || '',
 address: oneCompany.address || '',
+maps: oneCompany.maps || '',
 capacity: String(oneCompany.capacity) || '',
 logo: null,
 preview: oneCompany.logo || null,
@@ -76,6 +77,7 @@ const p = listPerusahaan[0];
 formData.append('name', p.name);
 formData.append('description', p.description);
 formData.append('address', p.address);
+formData.append('maps', p.maps);
 formData.append('capacity', p.capacity);
 if (p.logo instanceof File) formData.append('logo', p.logo);
 await update(idCompany, formData);
@@ -84,6 +86,7 @@ listPerusahaan.forEach((p, i) => {
 formData.append(`name[${i}]`, p.name);
 formData.append(`description[${i}]`, p.description);
 formData.append(`address[${i}]`, p.address);
+formData.append(`maps[${i}]`, p.maps);
 formData.append(`capacity[${i}]`, p.capacity);
 if (p.logo instanceof File) formData.append(`logo`, p.logo);
 });
@@ -149,10 +152,15 @@ className={`p-6 rounded-xl border ${styles.card} grid grid-cols-1 md:grid-cols-[
 <textarea value={item.description} onChange={(e) => handleChange(index, "description", e.target.value)} className={`w-full p-2.5 text-sm rounded-lg border ${styles.input} outline-none h-24 resize-none`} placeholder="Brief description of the company..." required />
 </div>
 
+<div className="flex flex-col gap-1.5">
+<label className="text-sm font-medium flex items-center gap-2"><AlignLeft size={14}/> Alamat</label>
+<textarea value={item.address} onChange={(e) => handleChange(index, "address", e.target.value)} className={`w-full p-2.5 text-sm rounded-lg border ${styles.input} outline-none h-24 resize-none`} placeholder="Brief description of the company..." required />
+</div>
+
 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 <div className="flex flex-col gap-1.5">
-<label className="text-sm font-medium flex items-center gap-2"><MapPin size={14}/> Address</label>
-<input type="text" value={item.address} onChange={(e) => handleChange(index, "address", e.target.value)} className={`w-full p-2.5 text-sm rounded-lg border ${styles.input} outline-none`} placeholder="Full address" required />
+<label className="text-sm font-medium flex items-center gap-2"><MapPin size={14}/> Link Gmaps</label>
+<input type="text" value={item.maps} onChange={(e) => handleChange(index, "maps", e.target.value)} className={`w-full p-2.5 text-sm rounded-lg border ${styles.input} outline-none`} placeholder="Full address" required />
 </div>
 <div className="flex flex-col gap-1.5">
 <label className="text-sm font-medium flex items-center gap-2"><Users size={14}/> Intern Capacity</label>

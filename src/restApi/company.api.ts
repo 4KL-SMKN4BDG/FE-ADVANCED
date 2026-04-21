@@ -14,6 +14,7 @@ export interface Company {
   name: string;
   description: string | null;
   adress: string | null;
+  maps: string | null;
   logo: string | null;
   capacity: number;
   createdAt: string;
@@ -25,6 +26,7 @@ export interface CompanyDetails {
   name: string;
   description: string | null;
   address: string | null;
+  maps: string | null;
   logo: string | null;
   capacity: number;
   createdAt: string;
