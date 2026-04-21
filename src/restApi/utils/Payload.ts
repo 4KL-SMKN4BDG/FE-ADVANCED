@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface Payload {
   selectedType: string;
@@ -12,13 +12,13 @@ interface Payload {
 }
 
 export const initialState = create<Payload>((set) => ({
-  selectedType: 'ALL',
+  selectedType: "ALL",
   setSelectedType: (type: string) => set({ selectedType: type }),
-  search: '',
+  search: "",
   setSearch: (search: string) => set({ search }),
-  startDate: '',
+  startDate: "",
   setStartDate: (date: string) =>
     set({ startDate: new Date(date).toISOString() }),
-  endDate: '',
+  endDate: "",
   setEndDate: (date: string) => set({ endDate: new Date(date).toISOString() }),
 }));

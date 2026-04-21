@@ -2,12 +2,12 @@ export const listed = {
   signin: "/signin",
   dashboard: "/dashboard",
   resetpass: "/resetpass",
-  selectRole: "/select-role", 
-  PerusahaanPage: "/perusahaan", 
+  selectRole: "/select-role",
+  PerusahaanPage: "/perusahaan",
   SiswaPage: "/siswa",
-  UserPage: "/user", 
-  AddPerusahaan: "/addperusahaan", 
-  EditPerusahaan: "/editperusahaan", 
+  UserPage: "/user",
+  AddPerusahaan: "/addperusahaan",
+  EditPerusahaan: "/editperusahaan",
   View: "/view",
   AddUser: "/adduser",
   AddGuru: "/addguru",
@@ -16,5 +16,5 @@ export const listed = {
   forgotpass: "/forgotpass",
   editguru: "/editguru",
   profile: "/profile", // Tambahkan ini
-  SplashScreen: ""
+  SplashScreen: "",
 };

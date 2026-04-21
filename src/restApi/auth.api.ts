@@ -42,29 +42,20 @@ export const loginAPI = async (
 export const forgotPasswordAPI = async (
   email: ForgotPassword
 ): Promise<void> => {
-  const response = await apiClient.post(
-    "/api/v1/auth/forgot-password",
-    email
-  )
+  const response = await apiClient.post("/api/v1/auth/forgot-password", email);
   return response.data;
-}
+};
 
-export const resetPasswordAPI = async (
-  data: ResetPassword
-): Promise<void> => {
-  const response = await apiClient.post(
-  "/api/v1/auth/reset-password",
-  data
-);
+export const resetPasswordAPI = async (data: ResetPassword): Promise<void> => {
+  const response = await apiClient.post("/api/v1/auth/reset-password", data);
   return response.data;
 };
 
 export const refreshTokenAPI = async (
   refreshToken: string
 ): Promise<LoginResponse> => {
-  const response = await apiClient.post<LoginResponse>(
-    "/api/v1/auth/refresh", 
-    {refreshToken}
-  );
+  const response = await apiClient.post<LoginResponse>("/api/v1/auth/refresh", {
+    refreshToken,
+  });
   return response.data;
 };

@@ -1,6 +1,6 @@
-import SeeMoreStore from '@/store/seeMore.store';
-import Modal, { closeModal } from './ui/Modal';
-import { X } from 'lucide-react';
+import SeeMoreStore from "@/store/seeMore.store";
+import Modal, { closeModal } from "./ui/Modal";
+import { X } from "lucide-react";
 
 const SeeMore = () => {
   const { string1, string2, string3, array1 } = SeeMoreStore();
@@ -11,7 +11,7 @@ const SeeMore = () => {
           <h1 className="text-3xl font-semibold">{string1}</h1>
           <button
             className="btn btn-square btn-ghost"
-            onClick={() => closeModal('more')}
+            onClick={() => closeModal("more")}
           >
             <X />
           </button>
@@ -19,26 +19,26 @@ const SeeMore = () => {
         <div
           className={
             array1?.length && array1.length > 0
-              ? 'p-5 rounded-2xl bg-base-200 mt-5'
-              : 'hidden'
+              ? "p-5 rounded-2xl bg-base-200 mt-5"
+              : "hidden"
           }
         >
           {array1?.map((item) => (
             <div className="flex flex-row gap-2 my-2">
               <h1>{item.subLabel}</h1> -
               <div className="flex flex-wrap gap-1">
-                <span className={item.read ? 'badge badge-primary' : 'hidden'}>
+                <span className={item.read ? "badge badge-primary" : "hidden"}>
                   Read
                 </span>
-                <span className={item.create ? 'badge badge-info' : 'hidden'}>
+                <span className={item.create ? "badge badge-info" : "hidden"}>
                   Create
                 </span>
                 <span
-                  className={item.update ? 'badge badge-warning' : 'hidden'}
+                  className={item.update ? "badge badge-warning" : "hidden"}
                 >
                   Update
                 </span>
-                <span className={item.delete ? 'badge badge-error' : 'hidden'}>
+                <span className={item.delete ? "badge badge-error" : "hidden"}>
                   Delete
                 </span>
               </div>

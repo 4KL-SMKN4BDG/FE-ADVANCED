@@ -53,7 +53,6 @@ const courses: Course[] = [
 const MainPage: React.FC = () => {
   const [showForm, setShowForm] = useState(true);
   const [theme, setTheme] = useState<"lofi" | "night">("lofi");
-  
 
   const [form, setForm] = useState({
     nama: "",
@@ -155,17 +154,17 @@ const MainPage: React.FC = () => {
       <Navbar toggleTheme={toggleTheme} theme={theme} />
 
       {/* ================= BANNER ================= */}
-<section className="px-8 pt-6">
-  <div
-    className="relative h-[200px] bg-cover bg-center flex justify-center items-center rounded-1xl overflow-hidden"
-    style={{ backgroundImage: "url('src/assets/fotodepansmk.jpeg')" }}
-  >
-    <div className="absolute inset-0 bg-black/50"></div>
-    <h1 className="font-kameron relative text-white text-5xl font-bold tracking-wide">
-      SELAMAT DATANG
-    </h1>
-  </div>
-</section>
+      <section className="px-8 pt-6">
+        <div
+          className="relative h-[200px] bg-cover bg-center flex justify-center items-center rounded-1xl overflow-hidden"
+          style={{ backgroundImage: "url('src/assets/fotodepansmk.jpeg')" }}
+        >
+          <div className="absolute inset-0 bg-black/50"></div>
+          <h1 className="font-kameron relative text-white text-5xl font-bold tracking-wide">
+            SELAMAT DATANG
+          </h1>
+        </div>
+      </section>
 
       {/* ================= COURSE ================= */}
       <section className="max-w-7xl mx-auto px-8 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

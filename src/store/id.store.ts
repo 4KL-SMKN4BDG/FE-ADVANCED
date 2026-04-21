@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface IdStore {
   selectedId: string;
@@ -6,7 +6,7 @@ interface IdStore {
 }
 
 const idStore = create<IdStore>((set) => ({
-  selectedId: '',
+  selectedId: "",
   setSelectedId: (id: string) => set({ selectedId: id }),
 }));
 

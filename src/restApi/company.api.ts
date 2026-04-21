@@ -7,7 +7,7 @@ export interface CompanyPaginate {
   limit: number;
   total_pages: number;
   items: Company[];
-  };
+}
 
 export interface Company {
   id: string;
@@ -19,7 +19,7 @@ export interface Company {
   capacity: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
 export interface CompanyDetails {
   id: string;
@@ -33,19 +33,19 @@ export interface CompanyDetails {
   updatedAt: string;
   teachers: User[] | null;
   students: User[] | null;
-};
+}
 
 export interface CompanyPaginateResponse {
   status: boolean;
   message: string;
   data: CompanyPaginate;
-};
+}
 
 export interface CompanyManyResponse {
   status: boolean;
   message: string;
   data: Company[];
-};
+}
 
 export interface CompanyOneResponse {
   status: boolean;
@@ -57,7 +57,7 @@ export interface CompanyDetailResponse {
   status: boolean;
   message: string;
   data: CompanyDetails;
-};
+}
 
 export interface CompanyCreate {
   name: string[];
@@ -65,7 +65,7 @@ export interface CompanyCreate {
   address: string[];
   logo: File[];
   capacity: number[];
-};
+}
 
 export interface CompanyUpdate {
   name: string;
@@ -106,32 +106,27 @@ export const CompanyUpdateAPI = async (id: string, data: FormData) => {
 };
 
 export const CompanyDeleteAPI = async (id: string) => {
-  const response = await apiClient.delete(
-    `/api/v1/company/delete/${id}`
-  );
+  const response = await apiClient.delete(`/api/v1/company/delete/${id}`);
   return response.data;
 };
 
 export const CompanyApplyAPI = async (companyId: string) => {
-  const response = await apiClient.post(
-    "/api/v1/company/apply",
-    { companyId }
-  );
+  const response = await apiClient.post("/api/v1/company/apply", { companyId });
   return response.data;
 };
 
 export const CompanyConfirmAPI = async (userId: string, status: string) => {
-  const response = await apiClient.post(
-    "/api/v1/company/response",
-    {userId, status}
-  );
+  const response = await apiClient.post("/api/v1/company/response", {
+    userId,
+    status,
+  });
   return response.data;
 };
 
 export const AddMentorAPI = async (companyId: string, teacherId: string) => {
-  const response = await apiClient.post(
-    "/api/v1/company/add-mentor",
-    {teacherId, companyId}
-  );
+  const response = await apiClient.post("/api/v1/company/add-mentor", {
+    teacherId,
+    companyId,
+  });
   return response.data;
 };

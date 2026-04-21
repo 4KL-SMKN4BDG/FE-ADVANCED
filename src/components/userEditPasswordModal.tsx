@@ -1,13 +1,13 @@
-import { ArrowLeft } from 'lucide-react';
-import Input from './ui/InputField';
-import Modal, { closeModal, openModal } from './ui/Modal';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { UserType } from '@/type/user';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { UserShcema } from '@/schema/user';
-import userStore from '@/store/user.store';
-import idStore from '@/store/id.store';
-import { useEffect } from 'react';
+import { ArrowLeft } from "lucide-react";
+import Input from "./ui/InputField";
+import Modal, { closeModal, openModal } from "./ui/Modal";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { UserType } from "@/type/user";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { UserShcema } from "@/schema/user";
+import userStore from "@/store/user.store";
+import idStore from "@/store/id.store";
+import { useEffect } from "react";
 
 const UserEditPasswordModal = () => {
   const { selectedId, setSelectedId } = idStore();
@@ -22,8 +22,8 @@ const UserEditPasswordModal = () => {
     defaultValues: {
       email: getData?.email,
       fullName: getData?.fullName,
-      password: '',
-      confirm_password: '',
+      password: "",
+      confirm_password: "",
       phoneWA: getData?.phoneWA,
       nik: getData?.nik.toString(),
       divisionId: getData?.divisionId,
@@ -33,13 +33,13 @@ const UserEditPasswordModal = () => {
 
   const onSubmit: SubmitHandler<UserType> = async (value) => {
     await updateUser(selectedId, value);
-    setSelectedId('');
-    closeModal('edit-password');
+    setSelectedId("");
+    closeModal("edit-password");
     reset({
       email: getData?.email,
       fullName: getData?.fullName,
-      password: '',
-      confirm_password: '',
+      password: "",
+      confirm_password: "",
       phoneWA: getData?.phoneWA,
       nik: getData?.nik.toString(),
       divisionId: getData?.divisionId,
@@ -51,8 +51,8 @@ const UserEditPasswordModal = () => {
       reset({
         email: getData.email,
         fullName: getData.fullName,
-        password: '',
-        confirm_password: '',
+        password: "",
+        confirm_password: "",
         phoneWA: getData.phoneWA,
         nik: getData.nik.toString(),
         divisionId: getData.divisionId,
@@ -65,11 +65,11 @@ const UserEditPasswordModal = () => {
       <button
         className="btn btn-ghost p-1"
         onClick={() => {
-          closeModal('edit-password');
-          openModal('user');
+          closeModal("edit-password");
+          openModal("user");
           reset({
-            password: '',
-            confirm_password: '',
+            password: "",
+            confirm_password: "",
           });
         }}
       >
@@ -85,7 +85,7 @@ const UserEditPasswordModal = () => {
             type="password"
             placeholder="Password"
             error={errors?.password}
-            {...register('password')}
+            {...register("password")}
           />
         </div>
       </fieldset>
@@ -97,7 +97,7 @@ const UserEditPasswordModal = () => {
             type="password"
             placeholder="Repeat Password"
             error={errors?.confirm_password}
-            {...register('confirm_password')}
+            {...register("confirm_password")}
           />
         </div>
       </fieldset>

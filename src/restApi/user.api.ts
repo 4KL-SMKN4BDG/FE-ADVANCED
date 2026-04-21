@@ -1,5 +1,5 @@
 import apiClient from "./base.api";
-import { Company } from "./company.api"
+import { Company } from "./company.api";
 
 export interface UserPaginate {
   total_items: number;
@@ -7,7 +7,7 @@ export interface UserPaginate {
   limit: number;
   total_pages: number;
   items: User[];
-};
+}
 
 export interface User {
   id: string;
@@ -32,33 +32,33 @@ export interface User {
 
   roles: Role[];
   company: Company | null;
-};
+}
 
 export interface Role {
-  id: string,
-  code: string,
-  description: string,
-  createdAt: string,
-  updatedAt: string
-};
+  id: string;
+  code: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export interface UserPaginateResponse {
   status: boolean;
   message: string;
   data: UserPaginate;
-};
+}
 
 export interface UserManyResponse {
   status: boolean;
   message: string;
   data: User[];
-};
+}
 
 export interface UserOneResponse {
   status: boolean;
   message: string;
   data: User;
-};
+}
 
 export interface NewUsers {
   name: string;
@@ -74,7 +74,7 @@ export interface UserUpdate {
   name: string | null;
   nomorInduk: string | null;
   email: string | null;
-  
+
   class: string | null;
   major: string | null;
   status: string | null;
@@ -120,8 +120,6 @@ export const UserUpdateAPI = async (id: string, data: FormData) => {
 };
 
 export const UserDeleteAPI = async (id: string) => {
-  const response = await apiClient.delete(
-    `/api/v1/user/delete/${id}`
-  );
+  const response = await apiClient.delete(`/api/v1/user/delete/${id}`);
   return response.data;
 };

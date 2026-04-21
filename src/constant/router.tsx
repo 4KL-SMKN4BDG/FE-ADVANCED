@@ -20,7 +20,7 @@ import Profile from "@/pages/USER/Profile"; // Import komponen Profile baru
 
 const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   { path: listed.signin, element: <SignIn /> },
-  { path: listed.resetpass, element: <ResetPass/> },
+  { path: listed.resetpass, element: <ResetPass /> },
   { path: listed.MainPage, element: <MainPage /> },
   { path: listed.RequestPage, element: <RequestPage /> },
   { path: listed.SplashScreen, element: <SplashScreen /> },
@@ -37,7 +37,7 @@ const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   { path: listed.AddUser, element: <AddSiswa /> },
   { path: listed.AddGuru, element: <AddGuru /> },
   { path: listed.dashboard, element: <Dashboard /> },
-  { path: listed.editguru, element: <EditGuru /> }
+  { path: listed.editguru, element: <EditGuru /> },
 ]);
 
 export default Route;

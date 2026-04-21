@@ -10,7 +10,7 @@ import {
   CompanyDeleteAPI,
   CompanyApplyAPI,
   CompanyConfirmAPI,
-  AddMentorAPI
+  AddMentorAPI,
 } from "@/restApi/company.api";
 import getErrorMessage from "@/restApi/helper.api";
 
@@ -47,7 +47,6 @@ const companyStore = create<AuthState>((set) => ({
         company: response.data.items,
         isLoading: false,
       });
-
     } catch (error) {
       set({
         error: getErrorMessage(error, "Login failed. Please try again."),
@@ -62,46 +61,47 @@ const companyStore = create<AuthState>((set) => ({
       const response = await CompanyShowOneAPI(id);
       set({
         oneCompany: response.data,
-        isLoading: false
+        isLoading: false,
       });
-
     } catch (error) {
       set({
-        error: getErrorMessage(error, "Something went wrong. Please try again."),
-        isLoading: false
+        error: getErrorMessage(
+          error,
+          "Something went wrong. Please try again."
+        ),
+        isLoading: false,
       });
     }
   },
 
   create: async (data: FormData) => {
     set({ isLoading: true, error: null });
-    try{
-    const response = await CompanyCreateAPI(data);
+    try {
+      const response = await CompanyCreateAPI(data);
 
-    set({
-      isLoading: false,
-    });
-    console.log(response);
+      set({
+        isLoading: false,
+      });
+      console.log(response);
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
-        isLoading: false
+        isLoading: false,
       });
     }
   },
 
   update: async (id: string, data: FormData) => {
-    
     set({ isLoading: true, error: null });
     try {
-    await CompanyUpdateAPI(id, data);
-    set({
-      isLoading: false,
-    })
+      await CompanyUpdateAPI(id, data);
+      set({
+        isLoading: false,
+      });
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
-        isLoading: false
+        isLoading: false,
       });
     }
   },
@@ -111,13 +111,13 @@ const companyStore = create<AuthState>((set) => ({
     try {
       await CompanyDeleteAPI(id);
       set({
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
         isLoading: false,
-      })
+      });
     }
   },
 
@@ -126,13 +126,13 @@ const companyStore = create<AuthState>((set) => ({
     try {
       await CompanyApplyAPI(companyId);
       set({
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
         isLoading: false,
-      })
+      });
     }
   },
 
@@ -141,13 +141,13 @@ const companyStore = create<AuthState>((set) => ({
     try {
       await CompanyConfirmAPI(userId, status);
       set({
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
         isLoading: false,
-      })
+      });
     }
   },
 
@@ -156,17 +156,15 @@ const companyStore = create<AuthState>((set) => ({
     try {
       await AddMentorAPI(companyId, teacherId);
       set({
-        isLoading: false
+        isLoading: false,
       });
     } catch (error) {
       set({
         error: getErrorMessage(error, "Something went wrong, please try again"),
         isLoading: false,
-      })
+      });
     }
   },
-
 }));
-
 
 export default companyStore;

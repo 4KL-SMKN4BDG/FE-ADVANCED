@@ -65,7 +65,6 @@ const LayoutAdmin: FC = () => {
           </div>
           <div className="flex-1 overflow-y-auto">
             <Outlet />
-          
           </div>
           <div className="flex justify-center">
             <span className="text-sm text-gray-500 py-2 flex gap-1">

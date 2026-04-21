@@ -1,40 +1,40 @@
 export const formatDateTime = (
   dateString: string,
-  format: 'short' | 'medium' | 'long' = 'medium'
+  format: "short" | "medium" | "long" = "medium"
 ) => {
   const date = new Date(dateString);
 
   const monthsShort = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'Mei',
-    'Jun',
-    'Jul',
-    'Agu',
-    'Sep',
-    'Okt',
-    'Nov',
-    'Des',
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Mei",
+    "Jun",
+    "Jul",
+    "Agu",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Des",
   ];
 
-  const day = date.getDate().toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, "0");
   const month = monthsShort[date.getMonth()];
   const year = date.getFullYear();
 
-  const hours = date.getHours().toLocaleString().padStart(2, '0');
-  const minutes = date.getMinutes().toLocaleString().padStart(2, '0');
-  const seconds = date.getSeconds().toLocaleString().padStart(2, '0');
+  const hours = date.getHours().toLocaleString().padStart(2, "0");
+  const minutes = date.getMinutes().toLocaleString().padStart(2, "0");
+  const seconds = date.getSeconds().toLocaleString().padStart(2, "0");
 
   switch (format) {
-    case 'short':
+    case "short":
       return `${day} ${month} ${year}`;
 
-    case 'medium':
+    case "medium":
       return `${day} ${month} ${year} ${hours}:${minutes}`;
 
-    case 'long':
+    case "long":
       return `${day} ${month} ${year} ${hours}:${minutes}:${seconds}`;
 
     default:
@@ -43,17 +43,17 @@ export const formatDateTime = (
 };
 
 export const formatTimeShort = (dateString: string) => {
-  const date = formatDateTime(dateString, 'short');
+  const date = formatDateTime(dateString, "short");
   return date;
 };
 
 export const formatTimeMid = (dateString: string) => {
-  const date = formatDateTime(dateString, 'medium');
+  const date = formatDateTime(dateString, "medium");
   return date;
 };
 
 export const formatTimeDetail = (dateString: string) => {
-  const date = formatDateTime(dateString, 'long');
+  const date = formatDateTime(dateString, "long");
   return date;
 };
 export const today = () => {
@@ -85,8 +85,8 @@ export const ISOParser = (e: string) => {
 export const DateInputParser = (date: string) => {
   const d = new Date(date);
   const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
 };

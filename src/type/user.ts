@@ -21,16 +21,16 @@ export type user = {
 
   roles: Role[];
   company: Company | null;
-}
+};
 
 export type Role = {
-  id: string,
-  code: string,
-  description: string,
-  createdAt: string,
-  updatedAt: string
-}
+  id: string;
+  code: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type Company = {
   id: string;
-}
+};

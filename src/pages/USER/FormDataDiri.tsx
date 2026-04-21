@@ -27,7 +27,7 @@ export default function FormDataDiri() {
       className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center relative"
       style={{
         backgroundImage: "url('/Sekolah.jpeg')",
-         backgroundPosition: "auto",
+        backgroundPosition: "auto",
       }}
     >
       {/* overlay gelap */}
@@ -56,7 +56,7 @@ export default function FormDataDiri() {
           onChange={handleChange}
           className="w-full border rounded-lg p-2"
         />
- 
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <input
             type="text"
