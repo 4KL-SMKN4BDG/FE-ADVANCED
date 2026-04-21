@@ -116,4 +116,4 @@ const userStore = create<AuthState>((set) => ({
 
 }));
 
-export default userStore;
+export default userStore

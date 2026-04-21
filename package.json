@@ -27,6 +27,7 @@
     "dayjs": "^1.11.18",
     "esbuild": "^0.25.11",
     "flowbite-react": "^0.12.9",
+    "framer-motion": "^12.38.0",
     "lodash": "^4.17.21",
     "lottie-react": "^2.4.1",
     "lucide-react": "^0.477.0",

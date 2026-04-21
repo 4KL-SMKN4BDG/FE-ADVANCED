@@ -15,70 +15,29 @@ import MainPage from "@/pages/USER/mainpage";
 import RequestPage from "@/pages/USER/requestpage";
 import SplashScreen from "@/pages/USER/SplashScreen";
 import ForgotPass from "@/pages/USER/ForgotPass";
+import EditGuru from "@/pages/ADMIN/EditGuru";
+import Profile from "@/pages/USER/Profile"; // Import komponen Profile baru
 
 const Route: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
-  {
-    path: listed.signin,
-    element: <SignIn />,
-  },
-  {
-    path: listed.resetpass,
-    element: <ResetPass/>,
-  },
-  {
-    path: listed.MainPage,
-    element: <MainPage />,
-  },
-  {
-    path: listed.RequestPage,
-    element: <RequestPage />,
-  },
-  {
-    path: listed.SplashScreen,
-    element: <SplashScreen />
-  },
-  {
-    path: listed.forgotpass,
-    element: <ForgotPass />
-  },
+  { path: listed.signin, element: <SignIn /> },
+  { path: listed.resetpass, element: <ResetPass/> },
+  { path: listed.MainPage, element: <MainPage /> },
+  { path: listed.RequestPage, element: <RequestPage /> },
+  { path: listed.SplashScreen, element: <SplashScreen /> },
+  { path: listed.forgotpass, element: <ForgotPass /> },
+  { path: listed.profile, element: <Profile /> }, // Daftarkan route profil
 
   // ADMIN PAGES
-  {
-    path: listed.PerusahaanPage,
-    element: <PerusahaanPage />,
-  },
-  {
-    path: listed.SiswaPage,
-    element: <SiswaPage />,
-  },
-  {
-    path: listed.UserPage,
-    element: <GuruPage />,
-  },
-  {
-    path: listed.AddPerusahaan,
-    element: <AddPerusahaan />,
-  },
-    {
-    path: listed.EditPerusahaan,
-    element: <EditPerusahaan />,
-  },
-    {
-    path: listed.View,
-    element: <View />
-  },
-  {
-    path: listed.AddUser,
-    element: <AddSiswa />,
-  },
-  {
-    path: listed.AddGuru,
-    element: <AddGuru />,
-  },
-  {
-    path: listed.dashboard,
-    element: <Dashboard />,
-  },
+  { path: listed.PerusahaanPage, element: <PerusahaanPage /> },
+  { path: listed.SiswaPage, element: <SiswaPage /> },
+  { path: listed.UserPage, element: <GuruPage /> },
+  { path: listed.AddPerusahaan, element: <AddPerusahaan /> },
+  { path: listed.EditPerusahaan, element: <EditPerusahaan /> },
+  { path: listed.View, element: <View /> },
+  { path: listed.AddUser, element: <AddSiswa /> },
+  { path: listed.AddGuru, element: <AddGuru /> },
+  { path: listed.dashboard, element: <Dashboard /> },
+  { path: listed.editguru, element: <EditGuru /> }
 ]);
 
 export default Route;

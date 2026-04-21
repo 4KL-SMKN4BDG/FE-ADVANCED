@@ -1,145 +1,154 @@
-// src/store/auth.store.ts
 import { create } from "zustand";
 import {
-  loginAPI,
-  LoginCredentials,
-  LoginResponse,
-  refreshTokenAPI,
-  ResetPassword,
-  resetPasswordAPI,
-  ForgotPassword,
-  forgotPasswordAPI
+loginAPI,
+LoginCredentials,
+LoginResponse,
+refreshTokenAPI,
+ResetPassword,
+resetPasswordAPI,
+ForgotPassword,
+forgotPasswordAPI
 } from "@/restApi/auth.api";
 
 import { User } from "../restApi/user.api"
 import getErrorMessage from "@/restApi/helper.api";
 
 interface AuthState {
-  user: User | null;
-  token: string | null;
-  isLoading: boolean;
-  error: string | null;
-  selectedRole: string | null;
-  isAuth: boolean;
-  login: (credentials: LoginCredentials) => Promise<void>;
-  logout: () => void;
-  refreshToken: () => Promise<string | null>;
-  setSelectedRole: (role: string) => void;
-  loadSession: () => void;
-  setAuth: (value: boolean) => void;
-  resetPassword: (newPassword: ResetPassword) => Promise<void>
-  forgotPassword: (email: ForgotPassword) => Promise<void>;
+user: User | null;
+token: string | null;
+isLoading: boolean;
+error: string | null;
+selectedRole: string | null;
+isAuth: boolean;
+login: (credentials: LoginCredentials) => Promise<void>;
+logout: () => void;
+refreshToken: () => Promise<string | null>;
+setSelectedRole: (role: string) => void;
+loadSession: () => void;
+setAuth: (value: boolean) => void;
+resetPassword: (newPassword: ResetPassword) => Promise<void>;
+forgotPassword: (email: ForgotPassword) => Promise<void>;
+updateUserSession: (updatedData: Partial<User>) => void; 
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  isLoading: false,
-  error: null,
-  selectedRole: sessionStorage.getItem("selectedRole") || null,
-  isAuth: true,
+user: null,
+token: null,
+isLoading: false,
+error: null,
+selectedRole: sessionStorage.getItem("selectedRole") || null,
+isAuth: true,
 
-  login: async (credentials: LoginCredentials) => {
-    set({ isLoading: true, error: null });
-    try {
-      const response: LoginResponse = await loginAPI(credentials);
-      const { user, token } = response.data;
+login: async (credentials: LoginCredentials) => {
+set({ isLoading: true, error: null });
+try {
+const response: LoginResponse = await loginAPI(credentials);
+const { user, token } = response.data;
 
-      set({
-        user,
-        token: token.accessToken,
-        isLoading: false,
-      });
+set({
+user,
+token: token.accessToken,
+isLoading: false,
+});
 
-      sessionStorage.setItem("token", token.accessToken);
-      localStorage.setItem("refresh", token.refreshToken);
-      sessionStorage.setItem("user", JSON.stringify(user));
-    } catch (error) {
-      set({
-        error: getErrorMessage(error, "Login failed. Please try again."),
-        isLoading: false,
-      });
-    }
-  },
+sessionStorage.setItem("token", token.accessToken);
+localStorage.setItem("refresh", token.refreshToken);
+sessionStorage.setItem("user", JSON.stringify(user));
+} catch (error) {
+set({
+error: getErrorMessage(error, "Login failed. Please try again."),
+isLoading: false,
+});
+}
+},
 
-  forgotPassword: async(email: ForgotPassword) => {
-    set({ isLoading: true, error: null });
-    try{
-      await forgotPasswordAPI(email);
-      set({ isLoading: false });
-    } catch (error) {
-      set({
-        isLoading: false,
-        error: getErrorMessage(error, "Failed to send reset password email, please try again"),
-      });
-    }
-  },
+forgotPassword: async(email: ForgotPassword) => {
+set({ isLoading: true, error: null });
+try{
+await forgotPasswordAPI(email);
+set({ isLoading: false });
+} catch (error) {
+set({
+isLoading: false,
+error: getErrorMessage(error, "Failed to send reset password email, please try again"),
+});
+}
+},
 
-  resetPassword: async(data: ResetPassword) => {
-    set({ isLoading: true, error: null });
-    try{
-      await resetPasswordAPI(data);
-      set({ isLoading: false });
-    } catch (error) {
-      set({
-        isLoading: false,
-        error: getErrorMessage(error, "Failed to reset password, please try again"),
-      });
-    }
-  },
+resetPassword: async(data: ResetPassword) => {
+set({ isLoading: true, error: null });
+try{
+await resetPasswordAPI(data);
+set({ isLoading: false });
+} catch (error) {
+set({
+isLoading: false,
+error: getErrorMessage(error, "Failed to reset password, please try again"),
+});
+}
+},
 
-  logout: () => {
-    set({
-      user: null,
-      token: null,
-      error: null,
-      isLoading: false,
-      selectedRole: null,
-    });
-    localStorage.clear();
-    sessionStorage.clear();
-  },
+logout: () => {
+set({
+user: null,
+token: null,
+error: null,
+isLoading: false,
+selectedRole: null,
+});
+localStorage.clear();
+sessionStorage.clear();
+},
 
-  refreshToken: async () => {
-    try {
-      const refreshToken = localStorage.getItem("refresh") ?? "";
-      const response: LoginResponse = await refreshTokenAPI(refreshToken);
-      const { token } = response.data;
+refreshToken: async () => {
+try {
+const refreshToken = localStorage.getItem("refresh") ?? "";
+const response: LoginResponse = await refreshTokenAPI(refreshToken);
+const { token } = response.data;
 
-      sessionStorage.setItem("token", token.accessToken);
-      localStorage.setItem("refresh", token.refreshToken);
-      set({ token: token.accessToken });
+sessionStorage.setItem("token", token.accessToken);
+localStorage.setItem("refresh", token.refreshToken);
+set({ token: token.accessToken });
 
-      return token.accessToken;
-    } catch (error) {
-      const errorMessage = getErrorMessage(error);
-      set({ user: null, token: null, error: errorMessage });
-      sessionStorage.removeItem("token");
-      return null;
-    }
-  },
+return token.accessToken;
+} catch (error) {
+const errorMessage = getErrorMessage(error);
+set({ user: null, token: null, error: errorMessage });
+sessionStorage.removeItem("token");
+return null;
+}
+},
 
-  setSelectedRole: (role: string) => {
-    set({ selectedRole: role });
-    sessionStorage.setItem("selectedRole", role);
-  },
+setSelectedRole: (role: string) => {
+set({ selectedRole: role });
+sessionStorage.setItem("selectedRole", role);
+},
 
-  loadSession: () => {
-    const savedUser = sessionStorage.getItem("user");
-    const savedRole = sessionStorage.getItem("selectedRole");
-    const savedToken = sessionStorage.getItem("token");
-    if (savedUser || savedRole || savedToken) {
-      set({
-        user: savedUser ? JSON.parse(savedUser) : null,
-        selectedRole: savedRole || null,
-        token: savedToken || null,
-      });
-    }
-  },
+loadSession: () => {
+const savedUser = sessionStorage.getItem("user");
+const savedRole = sessionStorage.getItem("selectedRole");
+const savedToken = sessionStorage.getItem("token");
+if (savedUser || savedRole || savedToken) {
+set({
+user: savedUser ? JSON.parse(savedUser) : null,
+selectedRole: savedRole || null,
+token: savedToken || null,
+});
+}
+},
 
-  setAuth: (value: boolean) => {
-    set({ isAuth: value });
-  },
+setAuth: (value: boolean) => {
+set({ isAuth: value });
+},
+
+updateUserSession: (updatedData: Partial<User>) => {
+set((state) => {
+if (!state.user) return state;
+const newUser = { ...state.user, ...updatedData };
+sessionStorage.setItem("user", JSON.stringify(newUser));
+return { user: newUser };
+});
+},
 }));
 
 export default useAuthStore;

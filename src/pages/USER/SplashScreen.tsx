@@ -1,107 +1,93 @@
-import { listed } from "@/constant/listed";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import { listed } from "@/constant/listed";
 
 const SplashScreen = () => {
-  const [stage, setStage] = useState(0);
-  const navigate = useNavigate();
+const [stage, setStage] = useState(0);
+const navigate = useNavigate();
 
-  useEffect(() => {
-    const t1 = setTimeout(() => setStage(1), 500);   // fade in center
-    const t2 = setTimeout(() => setStage(2), 1500);  // move left + resize
-    const t3 = setTimeout(() => setStage(3), 1900);  // text appear
-    const t4 = setTimeout(() => setStage(4), 2200);  // button appear
+useEffect(() => {
+const t1 = setTimeout(() => setStage(1), 400); 
+const t2 = setTimeout(() => setStage(2), 1200);
+const t3 = setTimeout(() => setStage(3), 1600);
 
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-      clearTimeout(t4);
-    };
-  }, []);
+return () => {
+clearTimeout(t1);
+clearTimeout(t2);
+clearTimeout(t3);
+};
+}, []);
 
-  return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {/* STATIC BACKGROUND */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage: "url('/src/assets/fotodepansmk.jpeg')",
-        }}
-      />
+return (
+<div className="relative w-full h-screen overflow-hidden bg-[#0a0a0a] text-slate-100 font-sans">
+{/* Background mesh/gradient tipis biar gak terlalu flat */}
+<div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/10 via-[#0a0a0a] to-[#0a0a0a]" />
 
-      {/* PROGRESSIVE BLUR LAYER */}
-      <div
-        className="absolute inset-0 backdrop-blur-[0px] transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
-        style={{
-          backdropFilter: stage >= 2 ? "blur(5px)" : "blur(0px)",
-          backgroundColor: "rgba(0,0,0,0.35)",
-        }}
-      />
+<div className="relative z-10 w-full h-full flex flex-col items-start justify-center px-10 md:px-24 max-w-7xl mx-auto">
 
-      {/* CONTENT */}
-      <div className="relative z-10 w-full h-full">
+{/* Header Text Kiri Atas */}
+<motion.div 
+initial={{ opacity: 0, y: -20 }}
+animate={{ opacity: 1, y: 0 }}
+className="absolute top-12 left-10 md:left-24 flex items-center gap-4"
+>
+<img src="/src/assets/logosmkn4.png" alt="SMK Logo" className="h-10 w-auto opacity-90" />
+<div className="h-6 w-[1px] bg-white/20" />
+<span className="text-slate-400 font-medium text-sm tracking-wide">Enterprise Secure Login</span>
+</motion.div>
 
-        {/* LOGO */}
-        <img
-          src="src/assets/logo 4kl.png"
-          alt="4KL Logo"
-          className={`
-            absolute transition-all duration-[1200ms]
-            ease-[cubic-bezier(0.22,1,0.36,1)]
-            ${stage < 2
-              ? "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              : "top-1/2 left-[70px] -translate-y-1/2"
-            }
-            ${stage < 2
-              ? "w-[795px]"
-              : "w-[597.86px]"
-            }
-            ${stage >= 1 ? "opacity-100 scale-100" : "opacity-0 scale-95"}
-          `}
-        />
+{/* Konten Utama Tengah */}
+<div className="flex flex-col items-start max-w-3xl">
+<motion.div
+initial={{ opacity: 0, scale: 0.95 }}
+animate={{ opacity: stage >= 1 ? 1 : 0, scale: stage >= 1 ? 1 : 0.95 }}
+transition={{ duration: 0.8, ease: "easeOut" }}
+className="mb-8"
+>
+<img src="src/assets/logo 4kl.png" alt="4KL Logo" className="w-[280px] md:w-[400px] object-contain mb-6" />
+</motion.div>
 
-        {/* LEFT TEXT BLOCK */}
-        {/* LOGO */}
-        <div className="absolute top-6 left-6">
-          
-        <img src="/src/assets/logosmkn4.png" alt="Logo SMK" className="h-15 w-auto drop-shadow-lg"/>
-        </div>
-        
-        <div
-          className={`
-            absolute left-[120px] top-1/2 -translate-y-1/2
-            transition-all duration-700
-            ease-[cubic-bezier(0.22,1,0.36,1)]
-            ${stage >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-          `}
-          style={{
-            marginTop: "calc(258.31px / 2 + 29px)", // spacing tepat dari logo
-          }}
-        >
-          <p className="text-white text-[22px] leading-relaxed mb-[29px]">
-            Permudah urusan pkl mu dengan <span className="font-bold">4KL</span>
-          </p>
+<motion.div
+initial={{ opacity: 0, y: 20 }}
+animate={stage >= 2 ? { opacity: 1, y: 0 } : {}}
+transition={{ duration: 0.6 }}
+>
+<div className="flex items-center gap-2 mb-4">
+<ShieldCheck className="text-blue-500 w-5 h-5" />
+<span className="text-blue-500 font-medium text-sm tracking-wide uppercase">System Ready</span>
+</div>
 
-          <button
-            onClick={() => navigate(listed.signin)}
-            className={`
-              px-8 py-3 rounded-full
-              bg-blue-500 text-white font-semibold
-              shadow-xl
-              hover:bg-blue-600
-              transition-all duration-700
-              ease-[cubic-bezier(0.22,1,0.36,1)]
-              ${stage >= 4 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}
-            `}
-          >
-            SIGN IN
-          </button>
-        </div>
+<h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white leading-tight mb-8">
+Streamline your workflow with <br/>
+<span className="text-blue-500">4KL System</span>.
+</h1>
 
-      </div>
-    </div>
-  );
+<motion.button
+whileHover={{ scale: 1.02 }}
+whileTap={{ scale: 0.98 }}
+onClick={() => navigate(listed.signin)}
+className="flex items-center gap-3 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-lg font-medium transition-all shadow-lg shadow-blue-500/20"
+>
+Sign in to workspace
+<ArrowRight size={18} />
+</motion.button>
+</motion.div>
+</div>
+
+{/* Footer */}
+<motion.div 
+initial={{ opacity: 0 }}
+animate={stage >= 3 ? { opacity: 1 } : {}}
+className="absolute bottom-12 left-10 md:left-24 right-10 md:right-24 flex justify-between items-center text-xs text-slate-500 font-medium"
+>
+<p>v2.0.4 Enterprise Edition</p>
+<p>&copy; {new Date().getFullYear()} E-PKL HUB.</p>
+</motion.div>
+</div>
+</div>
+);
 };
 
 export default SplashScreen;

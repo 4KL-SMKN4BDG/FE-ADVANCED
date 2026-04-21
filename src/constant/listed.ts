@@ -2,17 +2,19 @@ export const listed = {
   signin: "/signin",
   dashboard: "/dashboard",
   resetpass: "/resetpass",
-  selectRole: "/select-role", //nn 
+  selectRole: "/select-role", 
   PerusahaanPage: "/perusahaan", 
   SiswaPage: "/siswa",
   UserPage: "/user", 
   AddPerusahaan: "/addperusahaan", 
-  EditPerusahaan: "/editperusahaan", //nn
+  EditPerusahaan: "/editperusahaan", 
   View: "/view",
   AddUser: "/adduser",
   AddGuru: "/addguru",
   MainPage: "/mainpage",
   RequestPage: "/requestpage",
   forgotpass: "/forgotpass",
+  editguru: "/editguru",
+  profile: "/profile", // Tambahkan ini
   SplashScreen: ""
 };
